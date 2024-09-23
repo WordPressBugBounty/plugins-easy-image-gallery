@@ -1,0 +1,49 @@
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+.wp-block-cgb-block-easy-image-gallery-block {
+  background: #bada55;
+  border: 0.2rem solid #292929;
+  color: #292929;
+  margin: 0 auto;
+  max-width: 740px;
+  padding: 2rem; }
+
+.image-gallery {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap; }
+
+img.gallery-item {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 150px;
+  height: 150px; }
+
+.gallery-item-container {
+  display: inline-block;
+  -ms-flex: 0 0 33.33%;
+      flex: 0 0 33.33%; }
+
+@media (max-width: 600px) {
+  .gallery-item-container {
+    -ms-flex: 0 0 50%;
+        flex: 0 0 50%; } }
+
+@media (max-width: 400px) {
+  .image-gallery {
+    -ms-flex-pack: center;
+        justify-content: center; }
+  .gallery-item-container {
+    -ms-flex: 0 0 100%;
+        flex: 0 0 100%; } }
