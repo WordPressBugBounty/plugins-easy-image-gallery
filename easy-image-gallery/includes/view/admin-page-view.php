@@ -8,7 +8,7 @@ if ( ! current_user_can( 'manage_options' ) ) {
 }
 
 if ( ! empty( $_POST ) && check_admin_referer( 'eig_admin_page_save', 'eig_admin_page' ) ) {
-	$_POST = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
+	$_POST = filter_input_array( INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS );
 	update_option( 'easy-image-gallery', $_POST['easy-image-gallery'] );
 }
 ?>
