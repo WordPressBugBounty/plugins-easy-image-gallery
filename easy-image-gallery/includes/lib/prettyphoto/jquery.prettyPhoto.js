@@ -218,7 +218,7 @@
 
 			// Set the description
 			if(typeof pp_descriptions[set_position] != 'undefined' && pp_descriptions[set_position] != ""){
-				$pp_pic_holder.find('.pp_description').show().html(unescape(pp_descriptions[set_position]));
+				$pp_pic_holder.find('.pp_description').show().text(unescape(pp_descriptions[set_position]));
 			}else{
 				$pp_pic_holder.find('.pp_description').hide();
 			}
