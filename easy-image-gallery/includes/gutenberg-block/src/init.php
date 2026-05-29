@@ -16,6 +16,15 @@ if ( ! defined( 'EASY_IMAGE_BLOCK_GALLERY_URL' ) ) {
 	define( 'EASY_IMAGE_BLOCK_GALLERY_URL', trailingslashit( plugin_dir_url( __DIR__ ) ) );
 }
 
+/**
+ * Asset version for block CSS/JS (matches main plugin when available).
+ *
+ * @return string
+ */
+function easy_image_gallery_block_asset_version() {
+	return defined( 'EASY_IMAGE_GALLERY_VERSION' ) ? EASY_IMAGE_GALLERY_VERSION : '1.0.0';
+}
+
 
 /**
  * Hiding/Showing EIG Gutenberg Block depending on user choice to hide/show it
@@ -47,10 +56,11 @@ function easy_image_gallery_block_cgb_block_assets() { // phpcs:ignore
 
 	// Styles.
 	wp_enqueue_style(
-		'easy_image_gallery_block-cgb-style-css', // Handle.
-		plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ), // Block style CSS.
-		array( 'wp-editor' ) // Dependency to include the CSS after it.
-		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.style.build.css' ) // Version: File modification time.
+		'easy_image_gallery_block-cgb-style-css',
+		plugins_url( 'dist/blocks.style.build.css', dirname( __FILE__ ) ),
+		array( 'wp-editor' ),
+		easy_image_gallery_block_asset_version(),
+		'all'
 	);
 
 	if ( is_admin() ) {
@@ -89,18 +99,19 @@ function easy_image_gallery_block_cgb_editor_assets() { // phpcs:ignore
 
 	// Scripts.
 	wp_enqueue_script(
-		'easy_image_gallery_block-cgb-block-js', // Handle.
-		plugins_url( '/dist/blocks.build.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
-		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ), // Dependencies, defined above.
-		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.build.js' ), // Version: File modification time.
-		true // Enqueue the script in the footer.
+		'easy_image_gallery_block-cgb-block-js',
+		plugins_url( '/dist/blocks.build.js', dirname( __FILE__ ) ),
+		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ),
+		easy_image_gallery_block_asset_version(),
+		true
 	);
 	// Styles.
 	wp_enqueue_style(
-		'easy_image_gallery_block-cgb-block-editor-css', // Handle.
-		plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
-		array( 'wp-edit-blocks' ) // Dependency to include the CSS after it.
-		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.editor.build.css' ) // Version: File modification time.
+		'easy_image_gallery_block-cgb-block-editor-css',
+		plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ),
+		array( 'wp-edit-blocks' ),
+		easy_image_gallery_block_asset_version(),
+		'all'
 	);
 }
 

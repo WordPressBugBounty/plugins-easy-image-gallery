@@ -4,11 +4,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Add EIG Plugin Options Page
+ * Register the Easy Image Gallery options page in the admin menu.
  *
  * @since 1.4.1
  */
-function add_eig_plugin_page() {
+function easy_image_gallery_add_plugin_page() {
 	add_menu_page(
 		__( 'Easy Image Gallery Settings', 'easy-image-gallery' ),
 		__( 'Easy Image Gallery', 'easy-image-gallery' ),
@@ -18,4 +18,4 @@ function add_eig_plugin_page() {
 		'dashicons-images-alt2',
 	);
 }
-add_action( 'admin_menu', 'add_eig_plugin_page' );
+add_action( 'admin_menu', 'easy_image_gallery_add_plugin_page' );

@@ -8,53 +8,65 @@ if ( ! current_user_can( 'manage_options' ) ) {
 }
 
 if ( ! empty( $_POST ) && check_admin_referer( 'eig_admin_page_save', 'eig_admin_page' ) ) {
-	$_POST = filter_input_array( INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS );
-	update_option( 'easy-image-gallery', $_POST['easy-image-gallery'] );
+	if ( isset( $_POST['easy-image-gallery'] ) && is_array( $_POST['easy-image-gallery'] ) ) {
+		$easy_image_gallery_submitted = map_deep( wp_unslash( $_POST['easy-image-gallery'] ), 'sanitize_text_field' );
+		update_option( 'easy-image-gallery', $easy_image_gallery_submitted );
+	}
 }
 ?>
 <div class="wrap">
 	<form action='' method='post'>
-		<h1><?php echo __( 'Easy Image Gallery Settings', 'easy-image-gallery' ); ?></h1>
+		<h1><?php echo esc_html__( 'Easy Image Gallery Settings', 'easy-image-gallery' ); ?></h1>
 		<table class="form-table" role="presentation">
 			<tbody>
 				<div class="dx-plugin-disclaimer">
-					<h2><?php echo __( 'Add gallery to any post, page or custom post type', 'easy-image-gallery' ); ?></h2>
-					<p><strong><?php echo __( 'Disclaimer:', 'easy-image-gallery' ) ?></strong> <?php echo __( 'Each generated gallery shortcode can <strong> only be used on the specific page', 'easy-image-gallery');?> </strong> <?php echo __('it has been generated for. ', 'easy-image-gallery');?></p>
+					<h2><?php echo esc_html__( 'Add gallery to any post, page or custom post type', 'easy-image-gallery' ); ?></h2>
+					<p>
+						<strong><?php echo esc_html__( 'Disclaimer:', 'easy-image-gallery' ); ?></strong>
+						<?php
+						printf(
+							'%1$s <strong>%2$s</strong> %3$s',
+							esc_html__( 'Each generated gallery shortcode can', 'easy-image-gallery' ),
+							esc_html__( 'only be used on the specific page', 'easy-image-gallery' ),
+							esc_html__( 'it has been generated for.', 'easy-image-gallery' )
+						);
+						?>
+					</p>
 				</div>
 				<?php
 				// Default option when settings have not been saved.
-				$defaults['lightbox'] = 'prettyphoto';
+				$easy_image_gallery_defaults['lightbox'] = 'prettyphoto';
 
-				$settings = (array) get_option( 'easy-image-gallery', $defaults );
-				$lightbox = esc_attr( $settings['lightbox'] );
+				$easy_image_gallery_settings = (array) get_option( 'easy-image-gallery', $easy_image_gallery_defaults );
+				$easy_image_gallery_lightbox = esc_attr( $easy_image_gallery_settings['lightbox'] );
 				?>
 				<tr>
-					<th scope="row"><?php echo __( 'Lightbox', 'easy-image-gallery' ); ?></th>
+					<th scope="row"><?php echo esc_html__( 'Lightbox', 'easy-image-gallery' ); ?></th>
 					<td>
 						<select name="easy-image-gallery[lightbox]">
-							<?php foreach ( easy_image_gallery_lightbox() as $key => $label ) : ?>
-								<option value="<?php echo $key; ?>" <?php selected( $lightbox, $key ); ?>><?php echo $label; ?></option>
+							<?php foreach ( easy_image_gallery_lightbox() as $easy_image_gallery_key => $easy_image_gallery_label ) : ?>
+								<option value="<?php echo esc_attr( $easy_image_gallery_key ); ?>" <?php selected( $easy_image_gallery_lightbox, $easy_image_gallery_key ); ?>><?php echo esc_html( $easy_image_gallery_label ); ?></option>
 							<?php endforeach; ?>
 						</select>
 					</td>
 				</tr>
 				<?php
 				// Post and page defaults.
-				$defaults['post_types']['post'] = 'on';
-				$defaults['post_types']['page'] = 'on';
+				$easy_image_gallery_defaults['post_types']['post'] = 'on';
+				$easy_image_gallery_defaults['post_types']['page'] = 'on';
 
-				$settings = (array) get_option( 'easy-image-gallery', $defaults );
+				$easy_image_gallery_settings = (array) get_option( 'easy-image-gallery', $easy_image_gallery_defaults );
 				?>
 				<tr>
-					<th scope="row"><?php echo __( 'Post Types', 'easy-image-gallery' ); ?></th>
+					<th scope="row"><?php esc_html_e( 'Post Types', 'easy-image-gallery' ); ?></th>
 					<td>
 						<?php
-						foreach ( easy_image_gallery_get_post_types() as $key => $label ) :
+						foreach ( easy_image_gallery_get_post_types() as $easy_image_gallery_key => $easy_image_gallery_label ) :
 
-								$post_types = isset( $settings['post_types'][ $key ] ) ? esc_attr( $settings['post_types'][ $key ] ) : '';
+								$easy_image_gallery_post_types = isset( $easy_image_gallery_settings['post_types'][ $easy_image_gallery_key ] ) ? esc_attr( $easy_image_gallery_settings['post_types'][ $easy_image_gallery_key ] ) : '';
 							?>
 							<p>
-								<input type="checkbox" id="<?php echo $key; ?>" name="easy-image-gallery[post_types][<?php echo $key; ?>]" <?php checked( $post_types, 'on' ); ?>/><label for="<?php echo $key; ?>"> <?php echo $label; ?></label>
+								<input type="checkbox" id="<?php echo esc_attr( $easy_image_gallery_key ); ?>" name="easy-image-gallery[post_types][<?php echo esc_attr( $easy_image_gallery_key ); ?>]" <?php checked( $easy_image_gallery_post_types, 'on' ); ?>/><label for="<?php echo esc_attr( $easy_image_gallery_key ); ?>"> <?php echo esc_html( $easy_image_gallery_label ); ?></label>
 							</p>
 						<?php endforeach; ?>
 					</td>

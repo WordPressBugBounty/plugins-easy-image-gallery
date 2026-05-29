@@ -2,8 +2,8 @@
 Contributors: devrix, nofearinc
 Tags: image gallery, image, galleries, simple, easy, devrix
 Requires at least: 3.5
-Tested up to: 6.8.3
-Stable tag: 1.5.3
+Tested up to: 6.9.4
+Stable tag: 1.5.5
 Requires PHP: 7.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -117,6 +117,14 @@ In your WordPress admin under Settings -> Media
 The plugin ownership was transferred to DevriX. There are no functionality changes. We are going to work on a few version, adding some nice feature in the near feature, stay tuned! :)
 
 == Changelog ==
+
+= 1.5.5 =
+* Security: Escape gallery IDs in lightbox HTML attributes (fancybox, prettyPhoto, luminous) to prevent stored XSS via shortcode or post meta.
+* Security: Sanitize gallery IDs on save and in the [easy_image_gallery] shortcode.
+
+= 1.5.4 = 
+* Fixed vulnerability report
+* Tested up to WordPress 6.9.4
 
 = 1.5.3 =
 * Fixed XSS report about prettyPhoto library
